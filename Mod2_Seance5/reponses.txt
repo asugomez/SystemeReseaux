@@ -1,0 +1,18 @@
+man sem_overview --> semaphores
+
+Question 2)
+
+nm: list symbols from object files
+L'option "-D" : the symbol is in the initialized data section 
+
+objdump: display information from object files
+-T (dynamic-syms): Print the dynamic symbol table entries of the file.
+           This is only meaningful for dynamic objects, such as
+           certain types of shared libraries.  This is similar
+           to the information provided by the nm program when
+           given the -D (--dynamic) option.
+
+-------------------
+
+gcc lectRedac0.c -DNOWRITER -o lectRedac0 -lpthread
+gcc lectRedac0.c -DNOREADER -o lectRedac0 -lpthread

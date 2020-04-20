@@ -1,0 +1,59 @@
+q1) 
+ps -p 1 -o pid,euser,etime,stat,comm
+ps -p1 -opid,user,etime,state,cmd 
+ ps -ouser,uid,pid,pri,stat,etime,cmd -p1
+
+le commande correspondate se nomme init et se situe dans le répertoire 
+/sbin (dossier des commandes destinées à l'administrateur)
+
+q2) 
+
+make testStat testStat_ic
+size testStat; echo; size testStat_ic
+
+Q3)
+KiB est le symbole du kibibyte et équivaut à 2
+10 bytes. C’est un standard de IEC (International
+Electrotechnical Commission) adopté comme norme internationale ;
+d) La colonne S décrit l’état (Status) des différents processus et l’état S désigne l’état en sommeil
+d’un processus ;
+e) La colonne RES inique la taille de mémoire résidente, c’est-à-dire la taille de la mémoire physique
+qu’une tâche utilise.
+f) La colonne SHR donne la taille de mémoire disponible pour une tâche, pouvant être partagée
+avec d’autres processus
+
+
+Since Linux 2.6.23, the default scheduler
+       is CFS, the "Completely Fair  Scheduler".
+       The  CFS  scheduler  replaced the earlier
+       "O(1)" scheduler.
+
+(nice --help)
+NICE: Exécuter COMMANDE avec un niveau de priorité ajusté, ce qui modifie la priorité
+d'ordonnancement du processus. Sans COMMANDE, afficher le niveau de priorité actuel. L'étendue des niveaux va
+de -20 (priorité la plus favorable au processus) à 19 (la moins favorable).
+
+-- int nice(int inc);
+– int getpriority(int which, int who);
+– int setpriority(int which, int who, int prio);
+
+C’est la commande nice qui permet de définir l’indice de courtoisie d’un programme ou d’une
+commande à exécuter.
+Exemple : nice -n 10 sleep 15 pour exécuter la commande sleep avec un indice de courtoisie
+de 10,
+
+
+
+
+-------------------------------
+
+ps -o pid, cmd 5717
+
+
+q8) cest quoi arrière-plan? --> command et après ajouter "&"
+
+sleep(10) : pour 10 secondes, le programme arrête 
+
+--- argv (tableau de chaines d'arguments)
+--- envdp (tableau de chaines de la definition de variables d'environnement)
+execl, execlp, execle, execv, execvp

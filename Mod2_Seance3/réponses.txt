@@ -1,0 +1,77 @@
+SIG_SETMASK : le masque en cours est remplacé par celui dont l’adresse est spécifiée comme second
+paramètre ;
+SIG_BLOCK : on ajoute au masque en cours, le masque spécifié à l’adresse donnée comme second
+argument ;
+SIG_UNBLOCK : on retire du masque en cours les signaux mentionnés dans le masque dont l’adresse
+est spécifiée comme second argument.
+
+
+
+Q1) man 7 signal
+kill -l --> pour afficher la liste des signaux
+
+q2)
+kill -l SIGTSTP
+kill -l 10
+ 
+
+man 7 signal --> voir les signaux
+q3)
+SIGINT: Interruption depuis le clavier.
+
+SIGCHLD : Fils arrêté ou terminé
+
+SIGTSTP: Arrêt du processus.
+1.  C’est le signal permettant d’interrompre (d’arrêter) un processus. Un utilisateur génère ce signal
+lorsqu’il tape Ctrl-c au clavier.
+2. Ce signal est généré à destination d’un processus père lorsqu’un de ses processus enfants se
+termine.
+3. C’est le signal terminal stop qu’un utilisateur produit en tapant Ctrl-z pour arrêter temporairement le processus de premier plan.
+
+q4)
+./infini &
+ps -o pid,pri,ni,pcpu,stat,time,comm
+
+kill -INT [nro signal]
+
+q5)
+man 2 kill
+
+il est conforme au standard POSIX
+" conformes  à POSIX.1-2001 ont été adoptées dans le noyau 1.3.78."
+
+kill(1234,0) --> Si  sig  vaut  0,  aucun signal n'est
+       envoyé mais les  conditions  d'erreur
+       sont  vérifiées ; ceci peut être uti‐
+       lisé pour vérifier  l'existence  d'un
+       identifiant   de  processus  ou  d'un
+       identifiant de groupes de processus.
+
+
+q6) 
+man 2 alarm
+
+ alarm()  programme  une temporisation pour qu'elle envoie
+       un signal  SIGALRM  au  processus  appelant  dans  nb_sec
+       secondes
+
+q7) man 2 pause
+
+q9)
+locate signal.h
+
+less $(locate signal.h | grep "de/si") | nl | grep SIGINT
+less $(locate signal.h | grep "e/s") | nl | grep "bits/signum"
+
+q10)
+grep -d recurse "sigset_t;" /usr/include
+grep -d recurse "__sigset_t;" /usr/include
+
+grep -r "__sigset_t;" /usr/include | cut -d: -f1
+et l’utiliser pour effectuer l’affichage :
+less $(grep -r "__sigset_t;" /usr/include | cut -d: -f1)
+
+q16)
+
+quand il apparaît "wait(): interrupted system call"
+est parce que il y a un problème avec wait (pause aussi, etc)

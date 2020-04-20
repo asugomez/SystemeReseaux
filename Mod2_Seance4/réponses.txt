@@ -1,0 +1,91 @@
+Un thread est aussi appelé processus léger, car
+la plupart de ces opérations sont moins coûteuses en ressources (mémoire, CPU, …) que les opérations
+équivalentes sur processus.
+
+q1)
+
+time: run programs and summarize systeme
+man time
+
++-----------+--------+--------+
+Durée    |   réelle  |  user  |  sys.  |
++-----------+-----------+--------+--------+
+|  fork     |    12.69   |  7.08  |  3.42  |
++-----------+-----------+--------+--------+
+|  thread   |    1.76   |  0.23  |  0.91  |
++-----------+-----------+--------+--------+
+
+Ces résultats répresentent que thread est plus rapide pour réelle, user et système.
+
+-------------------------
+man 7 pthreads
+#include <pthread.h>
+
+La  plupart  des  fonctions  pthreads ren‐
+voient 0 en cas de  succès  et  un  numéro
+d'erreur  en  cas  d'échec.  Notez que les
+fonctions  pthreads  ne  positionnent  pas
+errno.
+
+
+On utilise l’option -lpthread, pour générer un exécutable multithreadé comme dans l’exemple suivant :
+gcc thread1.c -Wall -o thread1 -lpthread
+
+---------------------
+Opérations de base
+-----------------------
+
+man 3 pthread_.....
+
+pthread_create  --> créer une nouvelle activité
+pthread_join --> waits for the thread specified to terminate
+pthread_attr_t 
+pthread_attr_init --> initialiser une structure
+pthread_exit --> termine l'activité 
+-------------------
+mutex
+pthread_mutex_t monMutx --> declarer l'objets
+pthread_mutex_init() --> initialisation --> pthread_mutex_init(&myMutex,NULL)
+pthread_mutex_lock(*mutex) -->réalise le verrouillage s'il est libre et provoque la mise en attente du thread appelant s'il est occupé
+pthread_mutex_unlock(*mutex) --> pour le déverrouiller
+pthread_mutex_destroy(*mutex) --> supprimer le mutex
+
+. Si attr vaut NULL, alors le thread est créé avec les attributs par défaut.
+
+--------------------
+code source
+
+q2)
+whereis pthread (or locate pthread.h) 
+cat $(whereis pthread)
+
+man atexit --> appelée lorsque le programme se termine normalement
+avec exit(), permet d'installer un gestionnaire de terminaison de processus
+
+q3)
+error:
+/tmp/ccJ38Jg1.o : Dans la fonction « main » :
+thread1.c:(.text+0x5b) : référence indéfinie vers « pthread_create »
+thread1.c:(.text+0xa8) : référence indéfinie vers « pthread_create »
+thread1.c:(.text+0xf5) : référence indéfinie vers « pthread_join »
+thread1.c:(.text+0x136) : référence indéfinie vers « pthread_join »
+collect2: error: ld returned 1 exit status
+
+Il trouve pas les references des librairies
+
+On doit utiliser l'option: -lpthread 
+
+---------------------------
+typedef unsigned long int pthread_t;
+
+
+typedef void * (*pf_t)(void *);
+
+Cette déclaration semble compliquée mais en procédant par étape, on y arrive facilement :
+a) définir l’en-tête d’une fonction qui a un argument de type void * et qui retourne un void *
+void * pf_t (void *);
+b) faire de pf_t un pointeur de fonction qui ...
+void * (*pf_t)(void *);
+c) faire de pf_t un nouveau type de pointeur de ..., on ajoute simplement typedef devant la
+déclaration précédente
+typedef void * (*pf_t)(void *);
